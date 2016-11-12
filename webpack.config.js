@@ -9,11 +9,11 @@ const buildPath = path.join(__dirname, 'build/');
 const plugins = [
     new CleanWebpackPlugin(['./build']),
     new ExtractTextPlugin('[name].css'),
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false,
-        },
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //         warnings: false,
+    //     },
+    // }),
 ];
 
 const commonLoaders = [
@@ -39,8 +39,9 @@ const config = {
     output: {
         path: buildPath,
         filename: '[name].js',
-        library: 'forsythia',
-        libraryTarget: 'var',
+        library: 'library',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
     },
     module: {
         loaders: commonLoaders,

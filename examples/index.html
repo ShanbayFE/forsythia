@@ -6,7 +6,11 @@
         <link rel="stylesheet" href="/build/forsythia.css">
     </head>
     <body>
-        <p>forsythia</p>
+        <div id="editor"></div>
+        <script src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
         <script src="/build/forsythia.js"></script>
+        <script type="text/javascript">
+            var forsythia = new Forsythia('editor', {});
+        </script>
     </body>
 </html>
