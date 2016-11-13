@@ -1,10 +1,12 @@
 # Forsythia
 
-> A WYSIWYG(what you see is what you get) HTML text editors
+> A WYSIWYG(what you see is what you get) HTML text editors.
+
+This project is working in progress.
 
 # Basic Usage
 
-The easiest way to use Forsythia is to simply load the script and stylesheet:
+The easiest way to use Forsythia is to load the build script and stylesheet:
 
 ```html
 <link rel="stylesheet" href="forsythia.css" />
@@ -17,12 +19,12 @@ You can also use the baydn(Shanbay CDN):
 
 ```html
 <link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.css" />
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.js"></script>
 <script type="text/javascript" src="https://static.baydn.com/baydn/public/to-markdown/v3.0.3/to-markdown.js"></script>
 <script type="text/javascript" src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.js"></script>
 ```
 
-Having done this, an editor instance can be created:
+Having include the dependencies, an editor instance can be created:
 
 ```js
 var forsythia = new Forsythia('editor', {
@@ -41,14 +43,6 @@ Just by passing `markdownDisabled` option, You can easily disable some markdown 
 
 The callBack `onAddImg` is triggerred when the user has selected a file in toolbar.
 
-## Get the content
-
-To get the content of the editor you can use:
-
-```js
-forsythia.getContent();
-```
-
 ## Set the content
 
 You can reset the whole content of the editor by the following code:
@@ -63,3 +57,12 @@ Or just add some content like image:
 var url = 'https://xbay.17bdc.com/images/logo.png';
 forsythia.addContent({type: 'image', value: url});
 ```
+
+## Get the content
+
+To get the content of the editor you can use:
+
+```js
+forsythia.getContent();
+```
+
