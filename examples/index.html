@@ -7,6 +7,7 @@
     </head>
     <body>
         <div id="editor"></div>
+        <script src="https://static.baydn.com/baydn/public/to-markdown/v3.0.3/to-markdown.js"></script>
         <script src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
         <script src="/build/forsythia.js"></script>
         <script type="text/javascript">
@@ -15,6 +16,12 @@
                 syntax: 'markdown',
                 ossToken: {},
                 content: content,
+                onContentChange: function(content) {
+                    console.log(content);
+                },
+                onAddImg: function(file) {
+                    console.log(file);
+                },
                 // markdownDisabled: ['heading', 'code', 'table', 'blockquote',
                 //     'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
                 //     'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
@@ -22,7 +29,7 @@
             // forsythia.setOssToken({});
             // forsythia.setMarkdownDisabled([]);
             // forsythia.onAddImg({});
-            // forsythia.onContnetChange();
+            // forsythia.onContentChange();
             // forsythia.addContent({});
             // forsythia.setContent(text);
             // forsythia.getContnet();

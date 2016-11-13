@@ -1,30 +1,28 @@
-.forsythia {
-    .editor-img-btn {
-        position: relative;
-        font-size: 14px;
-        line-height: 1;
+.forsythia-img-btn {
+    position: relative;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-block;
+    border: 1px solid #eee;
+    padding: 5px 8px;
+    i {
+        width: 15px;
+        height: 13px;
         display: inline-block;
-        border: 1px solid #eee;
-        padding: 5px 8px;
-        i {
-            width: 15px;
-            height: 13px;
-            display: inline-block;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAXCAYAAAD+4+QTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyppVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTMyIDc5LjE1OTI4NCwgMjAxNi8wNC8xOS0xMzoxMzo0MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRDkzOEY4Rjk0MzgxMUU2OTkwOUIxM0NBNUQxNTM5RiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRDkzOEY5MDk0MzgxMUU2OTkwOUIxM0NBNUQxNTM5RiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDREM3QUM0OTQzODExRTY5OTA5QjEzQ0E1RDE1MzlGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZEOTM4RjhFOTQzODExRTY5OTA5QjEzQ0E1RDE1MzlGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+u0EeGgAAAOdJREFUeNpinDlzJgORgB2INwAxMxD7APEvYjUyEamOFYhXAbEHELsC8WqoZVSzhBGI5wOxH5IYiD2Zmpa0AXE0FvFMIG6hhiUggyrwyFdD1ZBtSQiRQQJSE06OJU5AvJTIyAWpWQTVgxWw4BCvBOInSHwuIJZAU/MCiL8h8auAeB8plrii8b2BeAuaWAoQb6VmPqEIjFoyagltLTkCxPeAWBaPugdA/BmJ/x2InxIwWxWIHwPxblBmtIYKykMFsYGrQMxHogfUgFgGhIdPnCCXXSZAzEFFsw2wWdJPy+C6TuPQugUQYAClmiI+T5lLSwAAAABJRU5ErkJggg==');
-            background-size: contain;
-            background-repeat: no-repeat;
-            margin-right: 5px;
-        }
-        p {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAXCAYAAAD+4+QTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyppVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTMyIDc5LjE1OTI4NCwgMjAxNi8wNC8xOS0xMzoxMzo0MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRDkzOEY4Rjk0MzgxMUU2OTkwOUIxM0NBNUQxNTM5RiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRDkzOEY5MDk0MzgxMUU2OTkwOUIxM0NBNUQxNTM5RiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDREM3QUM0OTQzODExRTY5OTA5QjEzQ0E1RDE1MzlGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZEOTM4RjhFOTQzODExRTY5OTA5QjEzQ0E1RDE1MzlGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+u0EeGgAAAOdJREFUeNpinDlzJgORgB2INwAxMxD7APEvYjUyEamOFYhXAbEHELsC8WqoZVSzhBGI5wOxH5IYiD2Zmpa0AXE0FvFMIG6hhiUggyrwyFdD1ZBtSQiRQQJSE06OJU5AvJTIyAWpWQTVgxWw4BCvBOInSHwuIJZAU/MCiL8h8auAeB8plrii8b2BeAuaWAoQb6VmPqEIjFoyagltLTkCxPeAWBaPugdA/BmJ/x2InxIwWxWIHwPxblBmtIYKykMFsYGrQMxHogfUgFgGhIdPnCCXXSZAzEFFsw2wWdJPy+C6TuPQugUQYAClmiI+T5lLSwAAAABJRU5ErkJggg==');
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-right: 5px;
+    }
+    p {
 
-        }
-        input {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-        }
+    }
+    input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
     }
 }
