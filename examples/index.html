@@ -10,7 +10,22 @@
         <script src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
         <script src="/build/forsythia.js"></script>
         <script type="text/javascript">
-            var forsythia = new Forsythia('editor', {});
+            var content = '* Hello world';
+            var forsythia = new Forsythia('editor', {
+                syntax: 'markdown',
+                ossToken: {},
+                content: content,
+                markdownDisabled: ['heading', 'code', 'table', 'blockquote',
+                    'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
+                    'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
+            });
+            // forsythia.setOssToken({});
+            // forsythia.setMarkdownDisabled([]);
+            // forsythia.onAddImg({});
+            // forsythia.onContnetChange();
+            // forsythia.addContent({});
+            // forsythia.setContent(text);
+            // forsythia.getContnet();
         </script>
     </body>
 </html>
