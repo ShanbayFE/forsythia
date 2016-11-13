@@ -1,14 +1,9 @@
 {
-  "name": "@shanbay/xbay",
-  "version": "0.1.21",
-  "description": "common components for shanbay frontend projects",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "@shanbay/forsythia",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
-    "url": "git@git.17bdc.com:frontend/xbay.git"
+    "url": "git@github.com:ShanbayFE/forsythia.git"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
@@ -29,6 +24,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2"
   },
-  "author": "",
+  "author": "wendy",
   "license": "ISC"
 }
