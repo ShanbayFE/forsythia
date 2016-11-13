@@ -2,7 +2,7 @@
 
 > A WYSIWYG(what you see is what you get) HTML text editors.
 
-This project is working in progress.
+This project is **working in progress**.
 
 # Basic Usage
 
