@@ -33,6 +33,26 @@ class Forsythia {
         this.el.className += ' forsythia';
         this.$content.setAttribute('contenteditable', true);
         this.setContent();
+        this.buildToolbar();
+    }
+
+    buildToolbar() {
+        const $imgBtn = document.createElement('div');
+        $imgBtn.className = 'editor-img-btn';
+
+        const template = {
+            img: [
+                '<div class="editor-img-btn">',
+                '<input type="file"/>',
+                '<i></i>',
+                '<span>上传图片</span>',
+                '</div>',
+            ],
+        };
+
+        const btns = template.img;
+
+        this.$toolbar.innerHTML = btns.join('');
     }
 }
 
