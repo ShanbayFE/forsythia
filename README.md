@@ -16,10 +16,10 @@ The easiest way to use Forsythia is to simply load the script and stylesheet:
 You can also use the baydn(Shanbay CDN):
 
 ```html
-<link rel="stylesheet" href="forsythia.css" />
-<script type="text/javascript" src="forsythia.js"></script>
-<script type="text/javascript" src="markdown-it.js"></script>
-<script type="text/javascript" src="to-markdown.js"></script>
+<link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.css" />
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.js"></script>
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/to-markdown/v3.0.3/to-markdown.js"></script>
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
 ```
 
 Having done this, an editor instance can be created:
