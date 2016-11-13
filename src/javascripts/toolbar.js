@@ -16,9 +16,9 @@ class Toolbar {
 
     buildMenu() {
         const templates = [{
-            name: 'img',
+            name: 'image',
             html: [
-                '<div class="forsythia-img-btn">',
+                '<div class="forsythia-img-btn" data-type="image">',
                 '<input type="file"/>',
                 '<i></i>',
                 '<span>上传图片</span>',
@@ -39,7 +39,10 @@ class Toolbar {
     }
 
     bindEvents() {
-
+        const $input = this.el.querySelector('input');
+        $input.addEventListener('change', e => {
+            this.options.onAddImg(e.target.files[0]);
+        });
     }
 }
 

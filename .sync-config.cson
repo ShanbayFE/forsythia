@@ -1,0 +1,17 @@
+remote:
+  host: "wx.dev"
+  user: "wangxin"
+  path: "forsythia"
+behaviour:
+  uploadOnSave: true
+  syncDownOnOpen: false
+  forgetConsole: false
+  autoHideConsole: true
+  alwaysSyncAll: true
+option:
+  deleteFiles: false
+  exclude: [
+    ".sync-config.cson"
+    "node_modules"
+    ".git"
+  ]

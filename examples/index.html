@@ -14,25 +14,18 @@
             var content = '# Hello world\n\rThis is forsythia';
             var forsythia = new Forsythia('editor', {
                 syntax: 'markdown',
-                ossToken: {},
                 content: content,
-                onContentChange: function(content) {
-                    console.log(content);
-                },
                 onAddImg: function(file) {
                     console.log(file);
                 },
-                // markdownDisabled: ['heading', 'code', 'table', 'blockquote',
-                //     'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
-                //     'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
+                markdownDisabled: ['heading', 'code', 'table', 'blockquote',
+                    'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
+                    'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
             });
-            // forsythia.setOssToken({});
-            // forsythia.setMarkdownDisabled([]);
-            // forsythia.onAddImg({});
-            // forsythia.onContentChange();
-            // forsythia.addContent({});
-            // forsythia.setContent(text);
-            // forsythia.getContnet();
+            var url = 'https://xbay.17bdc.com/images/logo.png';
+            forsythia.setContent('# Hello world\n\rThis is forsythia editor');
+            forsythia.addContent({type: 'image', value: url});
+            var markdownContent = forsythia.getContent();
         </script>
     </body>
 </html>

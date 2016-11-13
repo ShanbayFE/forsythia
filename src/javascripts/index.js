@@ -1,6 +1,7 @@
 require('../stylesheets/index.less');
 
 import Toolbar from './toolbar';
+import utils from './utils';
 
 class Forsythia {
     constructor(id, options) {
@@ -19,7 +20,7 @@ class Forsythia {
         this.md = window.markdownit();
         this.md.disable(this.options.markdownDisabled);
 
-        this.toolbar = new Toolbar(this.el, options);
+        this.toolbar = new Toolbar(this.el, this.options);
 
         this.initContent();
         this.bindEvents();
@@ -36,7 +37,6 @@ class Forsythia {
     }
 
     bindEvents() {
-
     }
 
     setContent(content) {
@@ -47,7 +47,35 @@ class Forsythia {
         }
     }
 
-    getContnet() {
+    getCurrentNode() {
+        const selection = window.getSelection();
+        const defaultNode = this.$content.lastElementChild;
+        if (!selection || !selection.rangeCount) {
+            return defaultNode;
+        }
+        const range = selection.getRangeAt(0);
+        const $parentNode = range.startContainer.parentNode;
+        if ($parentNode && utils.isDescendant(this.$content, $parentNode)) {
+            return $parentNode;
+        }
+        return defaultNode;
+    }
+
+    addContent(data) {
+        let html = '';
+        switch (data.type) {
+        case 'image':
+            html = `<img src="${data.value}" alt="image"/>`;
+            break;
+        default:
+            html = data.value;
+        }
+        const currentNode = this.getCurrentNode();
+        const addedNode = utils.htmlToNode(html);
+        currentNode.parentNode.insertBefore(addedNode, currentNode.nextSibling);
+    }
+
+    getContent() {
         return window.toMarkdown(this.$content.innerHTML);
     }
 }

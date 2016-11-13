@@ -9,11 +9,11 @@ const buildPath = path.join(__dirname, 'build/');
 const plugins = [
     new CleanWebpackPlugin(['./build']),
     new ExtractTextPlugin('[name].css'),
-    // new webpack.optimize.UglifyJsPlugin({
-    //     compress: {
-    //         warnings: false,
-    //     },
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false,
+        },
+    }),
 ];
 
 const commonLoaders = [
@@ -50,5 +50,5 @@ const config = {
 };
 
 module.exports = [
-    config
+    config,
 ];
