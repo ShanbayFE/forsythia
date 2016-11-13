@@ -6,7 +6,7 @@ This project is working in progress.
 
 # Basic Usage
 
-The easiest way to use Forsythia is to load the build script and stylesheet:
+The easiest way to use Forsythia is to load the built stylesheet and scripts:
 
 ```html
 <link rel="stylesheet" href="forsythia.css" />
