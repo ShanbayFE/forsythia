@@ -48,7 +48,7 @@ The callBack `onAddImg` is triggerred when the user has selected a file in toolb
 You can reset the whole content of the editor by the following code:
 
 ```js
-forsythia.getContent();
+forsythia.setContent('# Hello world');
 ```
 
 Or just add some content like image:
