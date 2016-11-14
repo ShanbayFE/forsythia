@@ -37,6 +37,12 @@ class Forsythia {
     }
 
     bindEvents() {
+        this.$content.addEventListener('keydown', () => {
+            if (!this.getContent().length) {
+                // p must have the content
+                this.$content.innerHTML = '<p><br></p>';
+            }
+        });
     }
 
     setContent(content) {
