@@ -2,12 +2,17 @@ const webpack = require('webpack');
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const buildPath = path.join(__dirname, 'build/');
+const buildPath = path.join(__dirname, 'dist/');
 
 const plugins = [
-    new CleanWebpackPlugin(['./build']),
+    new CleanWebpackPlugin(['./dist']),
+    new CopyWebpackPlugin([{
+        from: './examples/index.html',
+        toType: 'file',
+    }]),
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -34,7 +39,7 @@ const commonLoaders = [
 
 const config = {
     entry: {
-        'forsythia': './src/javascripts/index.js',
+        forsythia: './src/javascripts/index.js',
     },
     output: {
         path: buildPath,
