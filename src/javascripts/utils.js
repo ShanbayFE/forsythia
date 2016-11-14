@@ -1,9 +1,11 @@
 const utils = {
     isDescendant: (parent, child) => {
         let node = child.parentNode;
+        let deep = 0;
         while (node != null) {
+            deep++;
             if (node === parent) {
-                return true;
+                return deep;
             }
             node = node.parentNode;
         }
