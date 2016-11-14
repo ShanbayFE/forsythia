@@ -60,9 +60,9 @@ class Forsythia {
             return defaultNode;
         }
         const range = selection.getRangeAt(0);
-        const $parentNode = range.startContainer.parentNode;
-        if ($parentNode && utils.isDescendant(this.$content, $parentNode)) {
-            return $parentNode;
+        const $node = range.startContainer;
+        if ($node && utils.isDescendant(this.$content, $node)) {
+            return $node;
         }
         return defaultNode;
     }
@@ -78,7 +78,7 @@ class Forsythia {
         }
         const currentNode = this.getCurrentNode();
         const addedNode = utils.htmlToNode(html);
-        currentNode.parentNode.insertBefore(addedNode, currentNode.nextSibling);
+        currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
     }
 
     getContent() {
