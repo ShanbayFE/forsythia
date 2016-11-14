@@ -1,3 +1,4 @@
 build
 /node_modules
+.sync-config.cson
 .DS_Store
