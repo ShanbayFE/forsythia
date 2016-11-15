@@ -78,7 +78,11 @@ class Forsythia {
         }
         const currentNode = this.getCurrentNode();
         const addedNode = utils.htmlToNode(html);
-        currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+        if (currentNode) {
+            currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+        } else {
+            this.$content.appendChild(addedNode);
+        }
     }
 
     getContent() {
