@@ -3,6 +3,8 @@ require('../stylesheets/index.less');
 import Toolbar from './toolbar';
 import utils from './utils';
 
+const ENTER_KEY_CODE = 13;
+
 class Forsythia {
     constructor(id, options) {
         this.el = document.querySelector(`#${id}`);
@@ -37,10 +39,17 @@ class Forsythia {
     }
 
     bindEvents() {
-        this.$content.addEventListener('keydown', () => {
+        this.$content.addEventListener('keydown', e => {
             if (!this.getContent().length) {
                 // p must have the content
                 this.$content.innerHTML = '<p><br></p>';
+            }
+            if (e.which === ENTER_KEY_CODE) {
+                // browser will append div tag(should be p tag)
+                e.preventDefault();
+                const addedNode = utils.htmlToNode('<p><br></p>');
+                this.$content.appendChild(addedNode);
+                utils.focusNode(addedNode);
             }
         });
     }
