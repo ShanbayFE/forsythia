@@ -45,11 +45,17 @@ class Forsythia {
                 this.$content.innerHTML = '<p><br></p>';
             }
             if (e.which === ENTER_KEY_CODE) {
-                // browser will append div tag(should be p tag)
+                // browser will append div tag as default(but need to be a p tag)
                 e.preventDefault();
-                const addedNode = utils.htmlToNode('<p><br></p>');
-                this.$content.appendChild(addedNode);
-                utils.focusNode(addedNode);
+                document.execCommand('insertHTML', false, '<p><br></p>');
+                // const addedNode = utils.htmlToNode('<p><br></p>');
+                // const currentNode = this.getCurrentNode();
+                // if (currentNode) {
+                //     currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+                // } else {
+                //     this.$content.appendChild(addedNode);
+                // }
+                // utils.focusNode(addedNode);
             }
         });
     }
