@@ -36,10 +36,15 @@ var forsythia = new Forsythia('editor', {
     markdownDisabled: ['heading', 'code', 'table', 'blockquote',
         'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
         'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
+    markdownEnableOnly: [],     // options as the same like above.
 });
 ```
 
 Just by passing `markdownDisabled` option, You can easily disable some markdown rules like heading, code and so on.
+
+Meanwhile, you can also pass the `markdownEnableOnly` option, it accept an array list for the markdown syntax that you wanted to convert only.
+
+**if the option has `markdownDisabled` and `markdownEnableOnly` both, only the `markdownEnableOnly` works well.**
 
 The callBack `onAddImg` is triggerred when the user has selected a file in toolbar.
 
@@ -65,4 +70,3 @@ To get the content of the editor you can use:
 ```js
 forsythia.getContent();
 ```
-

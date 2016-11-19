@@ -3,7 +3,7 @@ const utils = {
         let node = child.parentNode;
         let deep = 0;
         while (node != null) {
-            deep++;
+            deep += 1;
             if (node === parent) {
                 return deep;
             }
@@ -12,13 +12,13 @@ const utils = {
         return false;
     },
 
-    htmlToNodes: html => {
+    htmlToNodes: (html) => {
         const template = document.createElement('template');
         template.innerHTML = html;
         return template.content.childNodes;
     },
 
-    htmlToNode: html => {
+    htmlToNode: (html) => {
         const template = document.createElement('template');
         template.innerHTML = html;
         return template.content.childNodes[0];

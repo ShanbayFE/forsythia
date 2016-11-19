@@ -8,8 +8,8 @@
         "no-unused-expressions": [2, { allowShortCircuit: true }],
         "no-script-url": 0,
     },
-    "globals": {
-        "$": true,
-        "template": true,
-    }
+    "env": {
+        "node": true,
+        "browser": true,
+    },
 }
