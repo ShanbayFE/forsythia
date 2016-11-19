@@ -1,23 +1,32 @@
-require('../stylesheets/index.less');
-
+/* eslint no-param-reassign: ["error", { "props": false }] */
+/* eslint max-len: ["off"] */
 import Toolbar from './toolbar';
 import utils from './utils';
+
+require('../stylesheets/index.less');
 
 class Forsythia {
     constructor(id, options) {
         this.el = document.querySelector(`#${id}`);
-        this.el.className += ' forsythia';
+        this.el.classList.add('forsythia');
 
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
-            markdownDisabled: [],
-            onContentChange: () => {},
             onAddImg: () => {},
+            markdownDisabled: [],
+            markdownEnableOnly: [],
         };
+
         this.options = Object.assign({}, defaultOptions, options);
+        const markdownTagList = ['heading', 'code', 'table', 'blockquote', 'hr', 'list', 'link', 'autolink', 'emphasis', 'fence', 'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'];
 
         this.md = window.markdownit();
+
+        if (this.options.markdownEnableOnly.length) {
+            this.options.markdownDisabled = markdownTagList.filter(lint => !(this.options.markdownEnableOnly.indexOf(lint) !== -1));
+        }
+
         this.md.disable(this.options.markdownDisabled);
 
         this.toolbar = new Toolbar(this.el, this.options);

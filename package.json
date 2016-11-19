@@ -1,6 +1,6 @@
 {
   "name": "@shanbay/forsythia",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "git@github.com:ShanbayFE/forsythia.git"
@@ -17,12 +17,20 @@
     "clean-webpack-plugin": "^0.1.9",
     "copy-webpack-plugin": "^2.1.3",
     "css-loader": "^0.23.1",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "less": "^2.6.0",
     "less-loader": "^2.2.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/webpack -w"
   },
   "author": "wendy",
   "license": "ISC"
