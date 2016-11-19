@@ -13,9 +13,10 @@ class Forsythia {
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
-            onAddImg: () => {},
             markdownDisabled: [],
             markdownEnableOnly: [],
+            onAddImg: () => {},
+            onContentChange: () => {},
         };
 
         this.options = Object.assign({}, defaultOptions, options);
