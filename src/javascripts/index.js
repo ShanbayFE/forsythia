@@ -69,16 +69,18 @@ class Forsythia {
 
     addContent(data) {
         let html = '';
-        switch (data.type) {
-        case 'image':
-            html = `<img src="${data.value}" alt="image"/>`;
-            break;
-        default:
-            html = data.value;
-        }
-        const currentNode = this.getCurrentNode();
-        const addedNode = utils.htmlToNode(html);
-        currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+        utils.getImageMeasure(data.value, ([imgWidth, imgHeight]) => {
+            switch (data.type) {
+            case 'image':
+                html = `<img src="${data.value}" alt="image/${imgWidth}/${imgHeight}"/>`;
+                break;
+            default:
+                html = data.value;
+            }
+            const currentNode = this.getCurrentNode();
+            const addedNode = utils.htmlToNode(html);
+            currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+        });
     }
 
     getContent() {
