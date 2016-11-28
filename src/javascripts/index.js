@@ -37,10 +37,13 @@ class Forsythia {
     }
 
     bindEvents() {
-        this.$content.addEventListener('keydown', () => {
+        this.$content.addEventListener('keydown', e => {
             if (!this.getContent().length) {
                 // p must have the content
                 this.$content.innerHTML = '<p><br></p>';
+            }
+            if (e.keyCode === 13) {
+                document.execCommand('formatBlock', false, 'p');
             }
         });
     }
