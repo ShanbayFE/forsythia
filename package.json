@@ -1,6 +1,6 @@
 {
   "name": "@shanbay/forsythia",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "repository": {
     "type": "git",
     "url": "git@github.com:ShanbayFE/forsythia.git"
@@ -25,9 +25,5 @@
     "webpack": "^1.13.2"
   },
   "author": "wendy",
-  "license": "ISC",
-  "scripts": {
-      "patch": "npm version patch",
-      "publish": "./node_modules/.bin/webpack && npm publish"
-  }
+  "license": "ISC"
 }
