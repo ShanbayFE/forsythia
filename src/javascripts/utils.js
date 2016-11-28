@@ -1,3 +1,4 @@
+/* global Image */
 const utils = {
     isDescendant: (parent, child) => {
         let node = child.parentNode;
@@ -22,6 +23,12 @@ const utils = {
         const template = document.createElement('template');
         template.innerHTML = html;
         return template.content.childNodes[0];
+    },
+
+    getImageMeasure: (imgUrl, callback = () => {}) => {
+        const img = new Image();
+        img.onload = () => callback([img.width, img.height]);
+        img.src = imgUrl;
     },
 };
 
