@@ -17,7 +17,7 @@
         <script src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
         <script src="/dist/forsythia.js"></script>
         <script type="text/javascript">
-            var content = '# Hello world\n\rThis is forsythia';
+            var content = '# Hello world\nThis is forsythia';
             var forsythia = new Forsythia('editor', {
                 syntax: 'markdown',
                 content: content,
@@ -29,7 +29,7 @@
                     'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
             });
             var url = 'https://xbay.17bdc.com/images/logo.png';
-            forsythia.setContent('# Hello world\n\rThis is forsythia editor');
+            forsythia.setContent('# Hello world\n\n\n\n\n\nThis\n\nis\nthe\n\nforsythia.');
             forsythia.addContent({type: 'image', value: url});
             var markdownContent = forsythia.getContent();
         </script>

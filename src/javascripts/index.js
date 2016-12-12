@@ -17,7 +17,7 @@ class Forsythia {
         };
         this.options = Object.assign({}, defaultOptions, options);
 
-        this.md = window.markdownit();
+        this.md = window.markdownit({ html: true });
         this.md.disable(this.options.markdownDisabled);
 
         this.toolbar = new Toolbar(this.el, this.options);
@@ -42,6 +42,7 @@ class Forsythia {
                 // p must have the content
                 this.$content.innerHTML = '<p><br></p>';
             }
+
             if (e.keyCode === 13) {
                 document.execCommand('formatBlock', false, 'p');
             }
@@ -50,7 +51,9 @@ class Forsythia {
 
     setContent(content) {
         if (this.options.syntax === 'markdown') {
-            this.$content.innerHTML = this.md.render(content);
+            // Multiple '\n' chars will generate multiple linebreaks.
+            const parsedContent = content.replace(/\n/g, '<br/>');
+            this.$content.innerHTML = this.md.render(parsedContent);
         } else {
             this.$content.innerHTML = content;
         }
