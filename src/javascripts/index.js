@@ -52,7 +52,7 @@ class Forsythia {
     setContent(content) {
         if (this.options.syntax === 'markdown') {
             // Multiple '\n' chars will generate multiple linebreaks.
-            const parsedContent = content.replace(/\n/g, '<br/>');
+            const parsedContent = content.replace(/\n/g, '<br>');
             this.$content.innerHTML = this.md.render(parsedContent);
         } else {
             this.$content.innerHTML = content;
@@ -94,7 +94,12 @@ class Forsythia {
     }
 
     getContent() {
-        return window.toMarkdown(this.$content.innerHTML);
+        return window.toMarkdown(this.$content.innerHTML, {
+            converters: [{
+                filter: 'br',
+                replacement: () => '\n',
+            }],
+        });
     }
 }
 
