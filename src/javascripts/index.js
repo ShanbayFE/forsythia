@@ -106,6 +106,9 @@ class Forsythia {
             if (currentNode) {
                 currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
             } else {
+                if (!this.$content.querySelector('p')) {
+                    this.$content.innerHTML = '<p><br></p>';
+                }
                 this.$content.querySelector('p').appendChild(addedNode);
             }
         });
