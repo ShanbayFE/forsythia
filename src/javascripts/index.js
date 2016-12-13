@@ -47,6 +47,16 @@ class Forsythia {
                 document.execCommand('formatBlock', false, 'p');
             }
         });
+        this.$content.addEventListener('paste', e => {
+            // cancel paste
+            e.preventDefault();
+
+            // get text representation of clipboard
+            const text = e.clipboardData.getData('text/plain');
+
+            // insert text manually
+            document.execCommand('insertHTML', false, text);
+        });
     }
 
     setContent(content) {
