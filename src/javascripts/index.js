@@ -69,6 +69,11 @@ class Forsythia {
         }
     }
 
+    getRange() {
+        const selection = window.getSelection();
+        return selection && selection.getRangeAt(0);
+    }
+
     getCurrentNode() {
         const selection = window.getSelection();
         const defaultNode = this.$content.lastElementChild;
@@ -98,16 +103,25 @@ class Forsythia {
             if (currentNode) {
                 currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
             } else {
-                this.$content.appendChild(addedNode);
+                this.$content.querySelector('p').appendChild(addedNode);
             }
         });
     }
 
     getContent() {
-        return window.toMarkdown(this.$content.innerHTML, {
+        // Need to remove unnecessary p tag.
+        // Because unnecessary p tag will generate multiple '\n' chars by to-markdown plugin.
+        let parsedContent = this.$content.innerHTML.replace(/<p><br><\/p>/g, '<br>');
+        // Need to add br tag for linebreaks.
+        // Because custom converters add a filter to remove default '\n\n' chars for p tag.
+        parsedContent = parsedContent.replace(/<\/p>/g, '</p><br>');
+        return window.toMarkdown(parsedContent, {
             converters: [{
                 filter: 'br',
                 replacement: () => '\n',
+            }, {
+                filter: 'p',
+                replacement: content => content,
             }],
         });
     }
