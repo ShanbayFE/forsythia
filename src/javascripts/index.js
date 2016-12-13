@@ -48,11 +48,14 @@ class Forsythia {
             }
         });
         this.$content.addEventListener('paste', e => {
+            if (!e.clipboardData) return;
+
             // cancel paste
             e.preventDefault();
 
             // get text representation of clipboard
-            const text = e.clipboardData.getData('text/plain');
+            const pastedContent = e.clipboardData.getData('text/plain');
+            const text = pastedContent.replace(/\n/g, '<br>');
 
             // insert text manually
             document.execCommand('insertHTML', false, text);
