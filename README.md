@@ -18,10 +18,10 @@ The easiest way to use Forsythia is to load the built stylesheet and scripts:
 You can also use the baydn(Shanbay CDN):
 
 ```html
-<link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.css" />
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/to-markdown/v3.0.3/to-markdown.js"></script>
+<link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v1.0.3/forsythia.css" />
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/to-markdown/v4.0.1/to-markdown.js"></script>
 <script type="text/javascript" src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v0.0.4/forsythia.js"></script>
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v1.0.3/forsythia.js"></script>
 ```
 
 Having include the dependencies, an editor instance can be created:
@@ -65,4 +65,3 @@ To get the content of the editor you can use:
 ```js
 forsythia.getContent();
 ```
-
