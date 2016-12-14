@@ -37,7 +37,7 @@ class Forsythia {
     }
 
     formatContent(content) {
-        return content.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+        return content.replace(/\n/g, '<br>');
     }
 
     bindEvents() {
@@ -51,6 +51,7 @@ class Forsythia {
                 document.execCommand('formatBlock', false, 'p');
             }
         });
+
         this.$content.addEventListener('paste', e => {
             if (!e.clipboardData) return;
 
@@ -61,8 +62,12 @@ class Forsythia {
             const pastedContent = e.clipboardData.getData('text/plain');
             const text = this.formatContent(pastedContent);
 
-            // insert text manually
-            document.execCommand('insertHTML', false, text);
+            if (!this.$content.querySelector('p')) {
+                this.$content.innerHTML = `<p>${text}</p>`;
+            } else {
+                // insert text manually
+                document.execCommand('insertHTML', false, text);
+            }
         });
     }
 
