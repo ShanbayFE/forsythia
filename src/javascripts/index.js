@@ -36,6 +36,10 @@ class Forsythia {
         this.setContent(this.options.content);
     }
 
+    formatContent(content) {
+        return content.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    }
+
     bindEvents() {
         this.$content.addEventListener('keydown', e => {
             if (!this.getContent().length) {
@@ -55,7 +59,7 @@ class Forsythia {
 
             // get text representation of clipboard
             const pastedContent = e.clipboardData.getData('text/plain');
-            const text = pastedContent.replace(/\n/g, '<br>');
+            const text = this.formatContent(pastedContent);
 
             // insert text manually
             document.execCommand('insertHTML', false, text);
@@ -65,7 +69,7 @@ class Forsythia {
     setContent(content) {
         if (this.options.syntax === 'markdown') {
             // Multiple '\n' chars will generate multiple linebreaks.
-            const parsedContent = content.replace(/\n/g, '<br>');
+            const parsedContent = this.formatContent(content);
             this.$content.innerHTML = this.md.render(parsedContent);
         } else {
             this.$content.innerHTML = content;
