@@ -38,7 +38,7 @@ class Forsythia {
 
     formatContent(content) {
         // A span tag is needed for getting the currentNode.
-        return content.replace(/\n/g, '<span><br></span>');
+        return content.replace(/\n/g, '<br>');
     }
 
     bindEvents() {
@@ -94,7 +94,13 @@ class Forsythia {
             return defaultNode;
         }
         const range = selection.getRangeAt(0);
-        const $node = range.startContainer;
+        const $startContainer = range.startContainer;
+        let $node = $startContainer;
+        if ($startContainer.childNodes.length) {
+            // Maybe the selection a Br tag
+            // FIXME: when image is the currentNode
+            $node = $startContainer.childNodes[range.startOffset];
+        }
         if ($node && utils.isDescendant(this.$content, $node)) {
             return $node;
         }
@@ -114,7 +120,7 @@ class Forsythia {
             const currentNode = this.getCurrentNode();
             const addedNode = utils.htmlToNode(html);
             if (currentNode) {
-                currentNode.parentNode.insertBefore(addedNode, currentNode.nextElementSibling);
+                currentNode.parentNode.insertBefore(addedNode, currentNode.nextSibling);
             } else {
                 if (!this.$content.querySelector('p')) {
                     this.$content.innerHTML = '<p><br></p>';
