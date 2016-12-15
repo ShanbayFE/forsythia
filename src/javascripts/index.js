@@ -100,8 +100,9 @@ class Forsythia {
             // If the cursor is in the right of the image,
             // currentNode should be image node, not the next node.
             // Correct it:
-            if ($startContainer.childNodes[range.startOffset - 1].nodeName === 'IMG') {
-                $node = $startContainer.childNodes[range.startOffset - 1];
+            const $beforeNode = $startContainer.childNodes[range.startOffset - 1];
+            if ($beforeNode && $beforeNode.nodeName === 'IMG') {
+                $node = $beforeNode;
             } else {
                 $node = $startContainer.childNodes[range.startOffset];
             }
