@@ -37,8 +37,8 @@ class Forsythia {
     }
 
     formatContent(content) {
-        // A p tag is needed for getting the currentNode.
-        return content.replace(/\n/g, '<p><br></p>');
+        // A span tag is needed for getting the currentNode.
+        return content.replace(/\n/g, '<span><br></span>');
     }
 
     bindEvents() {
