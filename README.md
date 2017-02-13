@@ -10,6 +10,7 @@ The easiest way to use Forsythia is to load the built stylesheet and scripts:
 
 ```html
 <link rel="stylesheet" href="forsythia.css" />
+<link rel="stylesheet" href="markdown-css.css" />
 <script type="text/javascript" src="markdown-it.js"></script>
 <script type="text/javascript" src="to-markdown.js"></script>
 <script type="text/javascript" src="forsythia.js"></script>
