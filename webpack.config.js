@@ -40,7 +40,7 @@ const commonLoaders = [
 const config = {
     entry: {
         forsythia: './src/javascripts/index.js',
-        'markdown-css': './src/stylesheets/markdown.less',
+        'forsythia-primary': './src/stylesheets/primary.less',
     },
     output: {
         path: buildPath,
