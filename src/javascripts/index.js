@@ -17,7 +17,7 @@ class Forsythia {
         };
         this.options = Object.assign({}, defaultOptions, options);
 
-        this.md = window.markdownit({ html: true });
+        this.md = window.markdownit({ html: true, breaks: true });
         this.md.disable(this.options.markdownDisabled);
 
         this.toolbar = new Toolbar(this.el, this.options);
@@ -61,13 +61,12 @@ class Forsythia {
 
             // get text representation of clipboard
             const pastedContent = e.clipboardData.getData('text/plain');
-            const text = this.formatContent(pastedContent);
 
             if (!this.$content.querySelector('p')) {
                 this.$content.innerHTML = `<p>${text}</p>`;
             } else {
                 // insert text manually
-                document.execCommand('insertHTML', false, text);
+                document.execCommand('insertHTML', false, pastedContent);
             }
         });
     }
@@ -75,8 +74,7 @@ class Forsythia {
     setContent(content) {
         if (this.options.syntax === 'markdown') {
             // Multiple '\n' chars will generate multiple linebreaks.
-            const parsedContent = this.formatContent(content);
-            this.$content.innerHTML = this.md.render(parsedContent);
+            this.$content.innerHTML = this.md.render(content);
         } else {
             this.$content.innerHTML = content;
         }
