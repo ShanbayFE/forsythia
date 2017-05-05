@@ -19,7 +19,7 @@ class Toolbar {
             name: 'image',
             html: [
                 '<div class="forsythia-img-btn" data-type="image">',
-                '<input type="file"/>',
+                `<input type="file" ${this.options.multiple ? 'multiple' : ''}/>`,
                 '<i></i>',
                 '<span>上传图片</span>',
                 '</div>',
@@ -41,7 +41,8 @@ class Toolbar {
     bindEvents() {
         const $input = this.el.querySelector('input');
         $input.addEventListener('change', e => {
-            this.options.onAddImg(e.target.files[0]);
+            let files = this.options.multiple ? e.target.files : e.target.files[0];
+            this.options.onAddImg(files);
         });
     }
 }
