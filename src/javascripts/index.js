@@ -8,6 +8,7 @@ class Forsythia {
         this.el = document.querySelector(`#${id}`);
         this.el.className += ' forsythia';
 
+        const defaultDisabledOptions = ['fence', 'lheading', 'escape', 'reference', 'html_block', 'newline', 'autolink'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
@@ -16,7 +17,10 @@ class Forsythia {
             onAddImg: () => {},
         };
         this.options = Object.assign({}, defaultOptions, options);
-
+        this.options.markdownDisabled = [
+            ...defaultDisabledOptions,
+            ...this.options.markdownDisabled,
+        ];
         this.md = window.markdownit({ html: true, breaks: true });
         this.md.disable(this.options.markdownDisabled);
 
@@ -42,7 +46,7 @@ class Forsythia {
     }
 
     bindEvents() {
-        this.$content.addEventListener('keydown', e => {
+        this.$content.addEventListener('keydown', (e) => {
             if (!this.getContent().length) {
                 // p must have the content
                 this.$content.innerHTML = '<p><br></p>';
@@ -53,7 +57,7 @@ class Forsythia {
             }
         });
 
-        this.$content.addEventListener('paste', e => {
+        this.$content.addEventListener('paste', (e) => {
             if (!e.clipboardData) return;
 
             // cancel paste
