@@ -8,10 +8,12 @@ class Forsythia {
         this.el = document.querySelector(`#${id}`);
         this.el.className += ' forsythia';
 
-        const defaultDisabledOptions = ['fence', 'lheading', 'escape', 'reference', 'html_block', 'newline', 'autolink'];
+        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
+            // 'heading', 'code', 'table', 'blockquote',
+            //     'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
             markdownDisabled: [],
             onContentChange: () => {},
             onAddImg: () => {},
