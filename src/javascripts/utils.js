@@ -13,13 +13,13 @@ const utils = {
         return false;
     },
 
-    htmlToNodes: html => {
+    htmlToNodes: (html) => {
         const template = document.createElement('template');
         template.innerHTML = html;
         return template.content.childNodes;
     },
 
-    htmlToNode: html => {
+    htmlToNode: (html) => {
         const template = document.createElement('template');
         template.innerHTML = html;
         return template.content.childNodes[0];

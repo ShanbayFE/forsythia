@@ -40,8 +40,8 @@ class Toolbar {
 
     bindEvents() {
         const $input = this.el.querySelector('input');
-        $input.addEventListener('change', e => {
-            let files = this.options.isMultiple ? e.target.files : e.target.files[0];
+        $input.addEventListener('change', (e) => {
+            const files = this.options.isMultiple ? e.target.files : e.target.files[0];
             this.options.onAddImg(files);
         });
     }
