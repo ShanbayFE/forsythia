@@ -27,6 +27,12 @@ class Forsythia {
     }
 
     setToolBarOptions() {
+        const options = {
+            heading: 'size',
+            emphasis: 'bold',
+            list: 'list',
+            color: 'color',
+        };
         const allToolbarOptions = [
             [{ size: [] }],
             ['bold', 'italic', 'underline', 'strike'],
