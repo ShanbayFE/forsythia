@@ -23,8 +23,13 @@ class Toolbar {
         }, {
             name: 'image',
             html: [
-                '<div class="forsythia-img-btn" data-type="image">',
-                '<input type="file"/>',
+                '<div class="forsythia-toolbar-btn forsythia-head-btn" data-value="1">',
+                '<a href="javascript:;">',
+                'H1',
+                '</a>',
+                '</div>',
+                '<div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">',
+                `<input type="file" ${this.options.isMultiple ? 'multiple' : ''}/>`,
                 '<i></i>',
                 '<span>上传图片</span>',
                 '</div>',
@@ -45,8 +50,9 @@ class Toolbar {
 
     bindEvents() {
         const $input = this.el.querySelector('input');
-        $input.addEventListener('change', e => {
-            this.options.onAddImg(e.target.files[0]);
+        $input.addEventListener('change', (e) => {
+            const files = this.options.isMultiple ? e.target.files : e.target.files[0];
+            this.options.onAddImg(files);
         });
     }
 }

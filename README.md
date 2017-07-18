@@ -34,6 +34,7 @@ var forsythia = new Forsythia('editor', {
     onAddImg: function(file) {
         console.log(file);
     },
+    isMultiple: false,
     markdownDisabled: ['heading', 'code', 'table', 'blockquote',
         'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
         'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],

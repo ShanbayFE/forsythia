@@ -7,17 +7,23 @@ class Forsythia {
         this.id = id;
         this.el = document.querySelector(`#${id}`);
 
+        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
+            // 'heading', 'code', 'table', 'blockquote',
+            //     'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
             markdownDisabled: [],
             onContentChange: () => {},
             onAddImg: () => {},
         };
 
         this.options = Object.assign({}, defaultOptions, options);
-
-        this.md = window.markdownit({ html: true });
+        this.options.markdownDisabled = [
+            ...defaultDisabledOptions,
+            ...this.options.markdownDisabled,
+        ];
+        this.md = window.markdownit({ html: true, breaks: true });
         this.md.disable(this.options.markdownDisabled);
 
         this.setToolBarOptions();
