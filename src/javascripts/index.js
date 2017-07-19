@@ -50,6 +50,7 @@ class Forsythia {
     // 绑定事件
     bindEvents() {
         const imgEl = document.querySelector('.forsythia-img-btn');
+
         imgEl.addEventListener('change', (e) => {
             const files = this.options.isMultiple ? e.target.files : e.target.files[0];
             this.options.onAddImg(files);
@@ -63,13 +64,13 @@ class Forsythia {
         // TODO: 此处对应的格式不全
         // ['bold', 'italic', 'underline', 'strike']
         const options = {
-            header: { header: 1 },
-            list: { list: 'bullet' },
-            link: 'link',
-            img: 'image',
+            heading: { header: [1, 2, 3, 4, 5, 6, false] },
+            list: [{ list: 'bullet' }, { list: 'ordered' }],
             color: { color: [] },
             code: 'code-block',
             blockquote: 'blockquote',
+            img: 'image',
+            link: 'link',
         };
         const generalOptions = {
             emphasis: 'bold',
@@ -79,7 +80,11 @@ class Forsythia {
 
         Object.keys(options).forEach((key) => {
             if (markdownDisabled.indexOf(key) === -1) {
-                toolbarOptions.push([options[key]]);
+                if (options[key].constructor === Array) {
+                    toolbarOptions.push(options[key]);
+                } else {
+                    toolbarOptions.push([options[key]]);
+                }
             }
         });
 
@@ -107,12 +112,10 @@ class Forsythia {
         `;
     }
 
-
     // 更新编辑器的内容
     update(content) {
         const html = this.md.render(content);
-
-        this.editorEl.innerHTML = html;
+        this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
     // 插入图片
