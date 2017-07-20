@@ -23,8 +23,10 @@ class Forsythia {
             ...this.options.markdownDisabled,
         ];
 
+        const markdownDisabled = this.options.markdownDisabled.filter(item => item !== 'color');
+
         this.md = window.markdownit({ html: true, breaks: true });
-        this.md.disable(this.options.markdownDisabled);
+        this.md.disable(markdownDisabled);
 
         this.setToolBarOptions();
         this.render();
@@ -58,51 +60,54 @@ class Forsythia {
     bindEvents() {
         const imgEl = document.querySelector('.forsythia-img-btn');
 
-        imgEl.addEventListener('change', (e) => {
-            const files = this.options.isMultiple ? e.target.files : e.target.files[0];
-            this.options.onAddImg(files);
-        });
+        if (imgEl) {
+            imgEl.addEventListener('change', (e) => {
+                const files = this.options.isMultiple ? e.target.files : e.target.files[0];
+                this.options.onAddImg(files);
+            });
+        }
     }
 
     // 设置工具箱
     setToolBarOptions() {
         const { markdownDisabled } = this.options;
 
-        // TODO: 此处对应的格式不全
-        // ['italic', 'underline', 'strike']
-        // 'heading', 'code', 'table', 'blockquote',
-        // 'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
         const options = {
             heading: { header: [1, 2, 3, 4, 5, 6, false] },
-            list: [{ list: 'bullet' }, { list: 'ordered' }],
+            generalOptions: [],
             color: { color: [] },
-            code: 'code-block',
             blockquote: 'blockquote',
-            img: 'image',
+            code: 'code-block',
+            list: [{ list: 'bullet' }, { list: 'ordered' }],
             link: 'link',
+            image: 'image',
         };
         const generalOptions = {
             emphasis: 'bold',
+            italic: 'italic',
+            underline: 'underline',
+            strikethrough: 'strike',
         };
 
         const toolbarOptions = [];
 
         Object.keys(options).forEach((key) => {
-            if (markdownDisabled.indexOf(key) === -1) {
-                if (options[key].constructor === Array) {
-                    toolbarOptions.push(options[key]);
-                } else {
-                    toolbarOptions.push([options[key]]);
-                }
+            if (markdownDisabled.indexOf(key) !== -1) {
+                return;
             }
-        });
 
-        toolbarOptions.push([]);
-
-        // 加在最后一个分组里，yeah~
-        Object.keys(generalOptions).forEach((key) => {
-            if (markdownDisabled.indexOf(key) === -1) {
-                toolbarOptions[toolbarOptions.length - 1].push(options[key]);
+            if (key === 'generalOptions') {
+                // 加在一个分组里，yeah~
+                toolbarOptions.push([]);
+                Object.keys(generalOptions).forEach((nestKey) => {
+                    if (markdownDisabled.indexOf(nestKey) === -1) {
+                        toolbarOptions[toolbarOptions.length - 1].push(generalOptions[nestKey]);
+                    }
+                });
+            } else if (options[key].constructor === Array) {
+                toolbarOptions.push(options[key]);
+            } else {
+                toolbarOptions.push([options[key]]);
             }
         });
 
@@ -113,13 +118,16 @@ class Forsythia {
     // 更新上传图片按钮
     updateTool() {
         const imgEl = document.querySelector('.ql-image');
-        imgEl.outerHTML = `
+
+        if (imgEl) {
+            imgEl.outerHTML = `
             <div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">
                 <input type="file" ${this.options.isMultiple ? 'multiple' : ''} />
                 <i></i>
                 <span>上传图片</span>
             </div>
-        `;
+            `;
+        }
     }
 
     // 插入图片
