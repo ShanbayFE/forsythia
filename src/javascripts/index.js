@@ -83,10 +83,11 @@ class Forsythia {
             image: 'image',
         };
         const generalOptions = {
-            emphasis: 'bold',
-            // !!! can't find italic & underline ！！！ how can i do !!!
-            italic: 'italic',
-            underline: 'underline',
+            // TODO
+            // italic 和 bold 是同一个，怎么办怎么办
+            // underline 可以通过 html_inline 禁掉，但是会影响其他吗？？？
+            emphasis: ['bold', 'italic'],
+            html_inline: 'underline',
             strikethrough: 'strike',
         };
 
@@ -100,9 +101,18 @@ class Forsythia {
             if (key === 'generalOptions') {
                 // 加在一个分组里，yeah~
                 toolbarOptions.push([]);
+                const arr = toolbarOptions[toolbarOptions.length - 1];
                 Object.keys(generalOptions).forEach((nestKey) => {
-                    if (markdownDisabled.indexOf(nestKey) === -1) {
-                        toolbarOptions[toolbarOptions.length - 1].push(generalOptions[nestKey]);
+                    if (markdownDisabled.indexOf(nestKey) !== -1) {
+                        return;
+                    }
+
+                    const option = generalOptions[nestKey];
+
+                    if (option.constructor === Array) {
+                        Array.prototype.push.apply(arr, option);
+                    } else {
+                        arr.push(option);
                     }
                 });
             } else if (options[key].constructor === Array) {
@@ -175,6 +185,14 @@ class Forsythia {
                         const colorArr = reg.exec(style);
 
                         return `^[text](${colorArr[1]})${node.innerHTML}`;
+                    },
+                },
+                {
+                    filter(node) {
+                        return node.nodeName === 'S';
+                    },
+                    replacement(content, node) {
+                        return `~~${node.innerHTML}~~`;
                     },
                 },
             ],
