@@ -84,6 +84,7 @@ class Forsythia {
         };
         const generalOptions = {
             emphasis: 'bold',
+            // !!! can't find italic & underline ！！！ how can i do !!!
             italic: 'italic',
             underline: 'underline',
             strikethrough: 'strike',
