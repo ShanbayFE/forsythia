@@ -11,8 +11,6 @@ class Forsythia {
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
-            // 'heading', 'code', 'table', 'blockquote',
-            // 'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
             markdownDisabled: [],
             onContentChange: () => {},
             onAddImg: () => {},
@@ -24,6 +22,7 @@ class Forsythia {
             ...defaultDisabledOptions,
             ...this.options.markdownDisabled,
         ];
+
         this.md = window.markdownit({ html: true, breaks: true });
         this.md.disable(this.options.markdownDisabled);
 
@@ -33,15 +32,23 @@ class Forsythia {
         this.insertImage = this.insertImage.bind(this);
     }
 
+    renderEditor(content) {
+        let html = this.md.render(content);
+        const reg = /\^\[text\]\((.*)?\)(.*)?/g;
+
+        html = html.replace(reg, (...args) => `<span style="color: ${args[1]}">${args[2]}</span>`);
+        this.editor.clipboard.dangerouslyPasteHTML(html);
+    }
+
     // 渲染编辑器
     render() {
-        const html = this.md.render(this.options.content);
-
-        this.el.innerHTML = html;
         this.editor = new Quill(`#${this.id}`, {
             modules: { toolbar: this.toolbarOptions },
             theme: 'snow',
         });
+
+        this.renderEditor(this.options.content);
+
         this.editorEl = this.el.querySelector('.ql-editor');
         this.updateTool();
         this.bindEvents();
@@ -62,7 +69,9 @@ class Forsythia {
         const { markdownDisabled } = this.options;
 
         // TODO: 此处对应的格式不全
-        // ['bold', 'italic', 'underline', 'strike']
+        // ['italic', 'underline', 'strike']
+        // 'heading', 'code', 'table', 'blockquote',
+        // 'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
         const options = {
             heading: { header: [1, 2, 3, 4, 5, 6, false] },
             list: [{ list: 'bullet' }, { list: 'ordered' }],
@@ -100,7 +109,8 @@ class Forsythia {
         this.toolbarOptions = toolbarOptions;
     }
 
-    // 更新工具箱的上传图片按钮
+    // 更新工具箱
+    // 更新上传图片按钮
     updateTool() {
         const imgEl = document.querySelector('.ql-image');
         imgEl.outerHTML = `
@@ -110,12 +120,6 @@ class Forsythia {
                 <span>上传图片</span>
             </div>
         `;
-    }
-
-    // 更新编辑器的内容
-    update(content) {
-        const html = this.md.render(content);
-        this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
     // 插入图片
@@ -134,7 +138,7 @@ class Forsythia {
 
     // 对外提供的接口，更新编辑器内容
     setContent(content) {
-        this.update(content);
+        this.renderEditor(content);
     }
 
     // 对外提供的接口，添加编辑器内容
@@ -157,7 +161,11 @@ class Forsythia {
                         return node.getAttribute('style');
                     },
                     replacement(content, node) {
-                        return node.outerHTML;
+                        const style = node.getAttribute('style');
+                        const reg = /color:\s(.*)?;/;
+                        const colorArr = reg.exec(style);
+
+                        return `^[text](${colorArr[1]})${node.innerHTML}`;
                     },
                 },
             ],
