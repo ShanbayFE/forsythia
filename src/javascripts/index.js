@@ -1,5 +1,9 @@
 require('../stylesheets/index.less');
 
+import MarkdownIt from 'markdown-it';
+import toMarkdown from 'to-markdown';
+import Quill from 'quill';
+
 import utils from './utils';
 
 class Forsythia {
@@ -25,7 +29,7 @@ class Forsythia {
 
         const markdownDisabled = this.options.markdownDisabled.filter(item => item !== 'color');
 
-        this.md = window.markdownit({ html: true, breaks: true });
+        this.md = new MarkdownIt({ html: true, breaks: true });
         this.md.disable(markdownDisabled);
 
         this.setToolBarOptions();
