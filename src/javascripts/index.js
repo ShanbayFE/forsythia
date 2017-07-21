@@ -11,7 +11,7 @@ class Forsythia {
         this.id = id;
         this.el = document.querySelector(`#${id}`);
 
-        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink'];
+        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink', 'html_inline'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
@@ -87,9 +87,6 @@ class Forsythia {
             image: 'image',
         };
         const generalOptions = {
-            // TODO
-            // italic 和 bold 是同一个，怎么办怎么办
-            // underline 可以通过 html_inline 禁掉，但是会影响其他吗？？？
             emphasis: ['bold', 'italic'],
             html_inline: 'underline',
             strikethrough: 'strike',
@@ -173,7 +170,7 @@ class Forsythia {
         }
     }
 
-    // 获得编辑器的内容（markdown 格式）
+    // 对外提供的接口，获得编辑器的内容（markdown 格式）
     getContent() {
         const html = this.editorEl.innerHTML;
 
