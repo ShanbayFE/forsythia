@@ -53,6 +53,9 @@ class Forsythia {
             theme: 'snow',
         });
 
+        document.querySelector('.ql-toolbar').classList.add('forsythia-toolbar');
+        document.querySelector('.ql-container').classList.add('forsythia-content');
+
         this.renderEditor(this.options.content);
 
         this.editorEl = this.el.querySelector('.ql-editor');
