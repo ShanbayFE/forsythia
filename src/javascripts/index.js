@@ -1,161 +1,205 @@
 require('../stylesheets/index.less');
 
-import Toolbar from './toolbar';
+import MarkdownIt from 'markdown-it';
+import toMarkdown from 'to-markdown';
+import Quill from 'quill';
+
 import utils from './utils';
 
 class Forsythia {
     constructor(id, options) {
+        this.id = id;
         this.el = document.querySelector(`#${id}`);
-        this.el.className += ' forsythia';
 
-        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink'];
+        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink', 'html_inline'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
-            // 'heading', 'code', 'table', 'blockquote',
-            //     'backticks', 'hr', 'list', 'link', 'emphasis', 'img'
             markdownDisabled: [],
             onContentChange: () => {},
             onAddImg: () => {},
         };
+
         this.options = Object.assign({}, defaultOptions, options);
+
         this.options.markdownDisabled = [
             ...defaultDisabledOptions,
             ...this.options.markdownDisabled,
         ];
-        this.md = window.markdownit({ html: true, breaks: true });
-        this.md.disable(this.options.markdownDisabled);
 
-        this.toolbar = new Toolbar(this.el, this.options);
+        const markdownDisabled = this.options.markdownDisabled.filter(item => item !== 'color');
 
-        this.initContent();
+        this.md = new MarkdownIt({ html: true, breaks: true });
+        this.md.disable(markdownDisabled);
+
+        this.setToolBarOptions();
+        this.render();
+
+        this.insertImage = this.insertImage.bind(this);
+    }
+
+    renderEditor(content) {
+        let html = this.md.render(content);
+        const reg = /\^\[text\]\((.*)?\)(.*)?/g;
+
+        html = html.replace(reg, (...args) => `<span style="color: ${args[1]}">${args[2]}</span>`);
+        this.editor.clipboard.dangerouslyPasteHTML(html);
+    }
+
+    // 渲染编辑器
+    render() {
+        this.editor = new Quill(`#${this.id}`, {
+            modules: { toolbar: this.toolbarOptions },
+            theme: 'snow',
+        });
+
+        this.renderEditor(this.options.content);
+
+        this.editorEl = this.el.querySelector('.ql-editor');
+        this.updateTool();
         this.bindEvents();
     }
 
-    initContent() {
-        this.$content = document.createElement('div');
-        this.$content.className = 'forsythia-content';
-
-        this.el.appendChild(this.$content);
-
-        this.$content.setAttribute('contenteditable', true);
-        this.setContent(this.options.content);
-    }
-
-    formatContent(content) {
-        // A span tag is needed for getting the currentNode.
-        return content.replace(/\n/g, '<br>');
-    }
-
+    // 绑定事件
     bindEvents() {
-        this.$content.addEventListener('keydown', (e) => {
-            if (!this.getContent().length) {
-                // p must have the content
-                this.$content.innerHTML = '<p><br></p>';
+        const imgEl = document.querySelector('.forsythia-img-btn');
+
+        if (imgEl) {
+            imgEl.addEventListener('change', (e) => {
+                const files = this.options.isMultiple ? e.target.files : e.target.files[0];
+                this.options.onAddImg(files);
+            });
+        }
+    }
+
+    // 设置工具箱
+    setToolBarOptions() {
+        const { markdownDisabled } = this.options;
+
+        const options = {
+            heading: { header: [1, 2, 3, 4, 5, 6, false] },
+            generalOptions: [],
+            color: { color: [] },
+            blockquote: 'blockquote',
+            code: 'code-block',
+            list: [{ list: 'bullet' }, { list: 'ordered' }],
+            link: 'link',
+            image: 'image',
+        };
+        const generalOptions = {
+            emphasis: ['bold', 'italic'],
+            html_inline: 'underline',
+            strikethrough: 'strike',
+        };
+
+        const toolbarOptions = [];
+
+        Object.keys(options).forEach((key) => {
+            if (markdownDisabled.indexOf(key) !== -1) {
+                return;
             }
 
-            if (e.keyCode === 13) {
-                document.execCommand('formatBlock', false, 'p');
+            if (key === 'generalOptions') {
+                // 加在一个分组里，yeah~
+                toolbarOptions.push([]);
+                const arr = toolbarOptions[toolbarOptions.length - 1];
+                Object.keys(generalOptions).forEach((nestKey) => {
+                    if (markdownDisabled.indexOf(nestKey) !== -1) {
+                        return;
+                    }
+
+                    const option = generalOptions[nestKey];
+
+                    if (option.constructor === Array) {
+                        Array.prototype.push.apply(arr, option);
+                    } else {
+                        arr.push(option);
+                    }
+                });
+            } else if (options[key].constructor === Array) {
+                toolbarOptions.push(options[key]);
+            } else {
+                toolbarOptions.push([options[key]]);
             }
         });
 
-        this.$content.addEventListener('paste', (e) => {
-            if (!e.clipboardData) return;
+        this.toolbarOptions = toolbarOptions;
+    }
 
-            // cancel paste
-            e.preventDefault();
+    // 更新工具箱
+    // 更新上传图片按钮
+    updateTool() {
+        const imgEl = document.querySelector('.ql-image');
 
-            // get text representation of clipboard
-            const pastedContent = e.clipboardData.getData('text/plain');
+        if (imgEl) {
+            imgEl.outerHTML = `
+            <div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">
+                <input type="file" ${this.options.isMultiple ? 'multiple' : ''} />
+                <i></i>
+                <span>上传图片</span>
+            </div>
+            `;
+        }
+    }
 
-            if (!this.$content.querySelector('p')) {
-                this.$content.innerHTML = `<p>${text}</p>`;
-            } else {
-                // insert text manually
-                document.execCommand('insertHTML', false, pastedContent);
-            }
+    // 插入图片
+    insertImage(src, [width, height]) {
+        const range = this.editor.getSelection() || {};
+
+        this.editor.insertEmbed(range.index, 'image', src);
+
+        // 增加图片高宽
+        const imgsEl = this.editorEl.querySelectorAll(`[src="${src}"]`);
+
+        imgsEl.forEach((el) => {
+            el.setAttribute('alt', `${width}/${height}`);
         });
     }
 
+    // 对外提供的接口，更新编辑器内容
     setContent(content) {
-        if (this.options.syntax === 'markdown') {
-            // Multiple '\n' chars will generate multiple linebreaks.
-            this.$content.innerHTML = this.md.render(content);
-        } else {
-            this.$content.innerHTML = content;
-        }
+        this.renderEditor(content);
     }
 
-    getRange() {
-        const selection = window.getSelection();
-        return selection && selection.getRangeAt(0);
-    }
-
-    getCurrentNode() {
-        const selection = window.getSelection();
-        const defaultNode = this.$content.lastElementChild;
-        if (!selection || !selection.rangeCount) {
-            return defaultNode;
-        }
-        const range = selection.getRangeAt(0);
-        const $startContainer = range.startContainer;
-        let $node = $startContainer;
-        if ($startContainer.childNodes.length) {
-            // If the cursor is in the right of the image,
-            // currentNode should be image node, not the next node.
-            // Correct it:
-            const $beforeNode = $startContainer.childNodes[range.startOffset - 1];
-            if ($beforeNode && $beforeNode.nodeName === 'IMG') {
-                $node = $beforeNode;
-            } else {
-                $node = $startContainer.childNodes[range.startOffset];
-            }
-        }
-        if ($node && utils.isDescendant(this.$content, $node)) {
-            return $node;
-        }
-        return defaultNode;
-    }
-
+    // 对外提供的接口，添加编辑器内容
     addContent(data) {
-        let html = '';
-        utils.getImageMeasure(data.value, ([imgWidth, imgHeight]) => {
-            switch (data.type) {
-            case 'image':
-                html = `<img src="${data.value}" alt="image/${imgWidth}/${imgHeight}"/>`;
-                break;
-            default:
-                html = data.value;
-            }
-            const currentNode = this.getCurrentNode();
-            const addedNode = utils.htmlToNode(html);
-            if (currentNode) {
-                currentNode.parentNode.insertBefore(addedNode, currentNode.nextSibling);
-            } else {
-                if (!this.$content.querySelector('p')) {
-                    this.$content.innerHTML = '<p><br></p>';
-                }
-                this.$content.querySelector('p').appendChild(addedNode);
-            }
-        });
+        if (data.type === 'image') {
+            utils.getImageMeasure(data.value, info =>
+                this.insertImage(data.value, info),
+            );
+        }
     }
 
+    // 对外提供的接口，获得编辑器的内容（markdown 格式）
     getContent() {
-        // Need to remove unnecessary p tag.
-        // Because unnecessary p tag will generate multiple '\n' chars by to-markdown plugin.
-        let parsedContent = this.$content.innerHTML.replace(/<p><br><\/p>/g, '<br>');
-        // Need to add br tag for linebreaks.
-        // Because custom converters add a filter to remove default '\n\n' chars for p tag.
-        parsedContent = parsedContent.replace(/<\/p>/g, '</p><br>');
-        return window.toMarkdown(parsedContent, {
-            converters: [{
-                filter: 'br',
-                replacement: () => '\n',
-            }, {
-                filter: 'p',
-                replacement: content => content,
-            }],
+        const html = this.editorEl.innerHTML;
+
+        const result = toMarkdown(html, {
+            converters: [
+                {
+                    filter(node) {
+                        return node.getAttribute('style');
+                    },
+                    replacement(content, node) {
+                        const style = node.getAttribute('style');
+                        const reg = /color:\s(.*)?;/;
+                        const colorArr = reg.exec(style);
+
+                        return `^[text](${colorArr[1]})${node.innerHTML}`;
+                    },
+                },
+                {
+                    filter(node) {
+                        return node.nodeName === 'S';
+                    },
+                    replacement(content, node) {
+                        return `~~${node.innerHTML}~~`;
+                    },
+                },
+            ],
         });
+
+        return result;
     }
 }
 

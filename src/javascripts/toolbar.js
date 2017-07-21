@@ -1,3 +1,4 @@
+
 class Toolbar {
     constructor($forsythia, options) {
         this.$forsythia = $forsythia;
@@ -12,10 +13,14 @@ class Toolbar {
 
         this.buildMenu();
         this.bindEvents();
+
     }
 
     buildMenu() {
         const templates = [{
+            name: 'emphasis',
+            html: ['<p class="">B</p>'],
+        }, {
             name: 'image',
             html: [
                 '<div class="forsythia-toolbar-btn forsythia-head-btn" data-value="1">',
@@ -29,7 +34,7 @@ class Toolbar {
                 '<span>上传图片</span>',
                 '</div>',
             ],
-        }];
+        },];
         const filteredTemplates = [];
 
         templates

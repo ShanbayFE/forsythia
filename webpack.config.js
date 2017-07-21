@@ -35,6 +35,10 @@ const commonLoaders = [
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
         loader: 'file-loader?name=[name].[ext]',
     },
+    {
+        test: /\.json$/,
+        loader: 'json-loader',
+    },
 ];
 
 const config = {
