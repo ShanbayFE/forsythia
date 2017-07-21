@@ -10,19 +10,14 @@ The easiest way to use Forsythia is to load the built stylesheet and scripts:
 
 ```html
 <link rel="stylesheet" href="forsythia.css" />
-<link rel="stylesheet" href="forsythia-primary.css" />
-<script type="text/javascript" src="markdown-it.js"></script>
-<script type="text/javascript" src="to-markdown.js"></script>
 <script type="text/javascript" src="forsythia.js"></script>
 ```
 
 You can also use the baydn(Shanbay CDN):
 
 ```html
-<link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v1.0.3/forsythia.css" />
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/to-markdown/v4.0.1/to-markdown.js"></script>
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/markdown-it/v8.1.0/markdown-it.min.js"></script>
-<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v1.0.3/forsythia.js"></script>
+<link rel="stylesheet" href="https://static.baydn.com/baydn/public/forsythia/v1.1.0/forsythia.css" />
+<script type="text/javascript" src="https://static.baydn.com/baydn/public/forsythia/v1.1.0/forsythia.js"></script>
 ```
 
 Having include the dependencies, an editor instance can be created:
@@ -35,9 +30,7 @@ var forsythia = new Forsythia('editor', {
         console.log(file);
     },
     isMultiple: false,
-    markdownDisabled: ['heading', 'code', 'table', 'blockquote',
-        'hr', 'list', 'link', 'autolink', 'emphasis', 'fence',
-        'lheading', 'escape', 'reference', 'html_block', 'newline', 'backticks'],
+    markdownDisabled: ['heading', 'color', 'blockquote', 'code', 'list', 'link', 'image', 'emphasis',  'strikethrough'],
 });
 ```
 
