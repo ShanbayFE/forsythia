@@ -6,12 +6,14 @@ import Quill from 'quill';
 
 import utils from './utils';
 
+const colorReg = /color:\s(.*)?;/;
+
 class Forsythia {
     constructor(id, options) {
         this.id = id;
         this.el = document.querySelector(`#${id}`);
 
-        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink', 'html_inline'];
+        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink'];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
@@ -39,10 +41,10 @@ class Forsythia {
     }
 
     renderEditor(content) {
-        let html = this.md.render(content);
-        const reg = /\^\[text\]\((.*)?\)(.*)?/g;
+        const reg = /\^\[(.*)\]\((.*)?\)/g;
 
-        html = html.replace(reg, (...args) => `<span style="color: ${args[1]}">${args[2]}</span>`);
+        const newContent = content.replace(reg, (...args) => `<span style="color: ${args[2]}">${args[1]}</span>`);
+        const html = this.md.render(newContent);
         this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
@@ -177,6 +179,15 @@ class Forsythia {
     getContent() {
         const html = this.editorEl.innerHTML;
 
+        const converter = {
+            filter(node) {
+                return node.nodeName === 'STRONG' && node.firstChild.nodeName === 'EM';
+            },
+            replacement(content, node) {
+                return `*__${node.firstChild.innerHTML}__*`;
+            },
+        };
+
         const result = toMarkdown(html, {
             converters: [
                 {
@@ -185,12 +196,13 @@ class Forsythia {
                     },
                     replacement(content, node) {
                         const style = node.getAttribute('style');
-                        const reg = /color:\s(.*)?;/;
-                        const colorArr = reg.exec(style);
+                        const colorArr = colorReg.exec(style);
+                        const innerRes = toMarkdown(node.outerHTML, { converters: [converter] });
 
-                        return `^[text](${colorArr[1]})${node.innerHTML}`;
+                        return `^[${innerRes}](${colorArr[1]})`;
                     },
                 },
+                converter,
                 {
                     filter(node) {
                         return node.nodeName === 'S';
