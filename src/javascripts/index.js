@@ -50,11 +50,8 @@ class Forsythia {
 
     renderEditor(content) {
         let html = this.md.render(content);
-        const reg = /\^\[(.*)\]\((rgb\(\d, \d, \d\))\)/g;
-        html = html.replace(
-            reg,
-            (...args) => `<span style="color: ${args[2]}">${args[1]}</span>`,
-        );
+        const reg = /\^\[((.|\n)*?)\]\((.*?\))\)/g;
+        html = html.replace(reg, '<span style="color: $3">$1</span>');
         this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
@@ -155,9 +152,9 @@ class Forsythia {
         if (imgEl) {
             imgEl.outerHTML = `
             <div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">
-                <input type="file" ${this.options.isMultiple
-        ? 'multiple'
-        : ''} />
+                <input type="file" ${
+    this.options.isMultiple ? 'multiple' : ''
+} />
                 <i></i>
                 <span>上传图片</span>
             </div>
