@@ -50,7 +50,7 @@ class Forsythia {
 
     renderEditor(content) {
         let html = this.md.render(content);
-        const reg = /\^\[(.*)\]\((rgb\([0-9]+, [0-9]+, [0-9]+\))\)/g;
+        const reg = /\^\[(.*)\]\((rgb\(\d, \d, \d\))\)/g;
         html = html.replace(
             reg,
             (...args) => `<span style="color: ${args[2]}">${args[1]}</span>`,
