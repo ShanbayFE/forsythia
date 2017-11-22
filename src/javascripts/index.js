@@ -11,7 +11,15 @@ class Forsythia {
         this.id = id;
         this.el = document.querySelector(`#${id}`);
 
-        const defaultDisabledOptions = ['fence', 'lheading', 'reference', 'html_block', 'newline', 'autolink', 'html_inline'];
+        const defaultDisabledOptions = [
+            'fence',
+            'lheading',
+            'reference',
+            'html_block',
+            'newline',
+            'autolink',
+            'html_inline',
+        ];
         const defaultOptions = {
             syntax: 'markdown',
             content: '',
@@ -27,7 +35,9 @@ class Forsythia {
             ...this.options.markdownDisabled,
         ];
 
-        const markdownDisabled = this.options.markdownDisabled.filter(item => item !== 'color');
+        const markdownDisabled = this.options.markdownDisabled.filter(
+            item => item !== 'color',
+        );
 
         this.md = new MarkdownIt({ html: true, breaks: true });
         this.md.disable(markdownDisabled);
@@ -40,9 +50,11 @@ class Forsythia {
 
     renderEditor(content) {
         let html = this.md.render(content);
-        const reg = /\^\[text\]\((.*)?\)(.*)?/g;
-
-        html = html.replace(reg, (...args) => `<span style="color: ${args[1]}">${args[2]}</span>`);
+        const reg = /\^\[(.*)\]\((rgb\(\d, \d, \d\))\)/g;
+        html = html.replace(
+            reg,
+            (...args) => `<span style="color: ${args[2]}">${args[1]}</span>`,
+        );
         this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
@@ -53,8 +65,12 @@ class Forsythia {
             theme: 'snow',
         });
 
-        document.querySelector('.ql-toolbar').classList.add('forsythia-toolbar');
-        document.querySelector('.ql-container').classList.add('forsythia-content');
+        document
+            .querySelector('.ql-toolbar')
+            .classList.add('forsythia-toolbar');
+        document
+            .querySelector('.ql-container')
+            .classList.add('forsythia-content');
 
         this.renderEditor(this.options.content);
 
@@ -69,7 +85,9 @@ class Forsythia {
 
         if (imgEl) {
             imgEl.addEventListener('change', (e) => {
-                const files = this.options.isMultiple ? e.target.files : e.target.files[0];
+                const files = this.options.isMultiple
+                    ? e.target.files
+                    : e.target.files[0];
                 this.options.onAddImg(files);
             });
         }
@@ -137,7 +155,9 @@ class Forsythia {
         if (imgEl) {
             imgEl.outerHTML = `
             <div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">
-                <input type="file" ${this.options.isMultiple ? 'multiple' : ''} />
+                <input type="file" ${this.options.isMultiple
+        ? 'multiple'
+        : ''} />
                 <i></i>
                 <span>上传图片</span>
             </div>
@@ -188,7 +208,7 @@ class Forsythia {
                         const reg = /color:\s(.*)?;/;
                         const colorArr = reg.exec(style);
 
-                        return `^[text](${colorArr[1]})${node.innerHTML}`;
+                        return `^[${node.innerHTML}](${colorArr[1]})`;
                     },
                 },
                 {
