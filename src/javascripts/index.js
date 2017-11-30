@@ -50,7 +50,7 @@ class Forsythia {
 
     renderEditor(content) {
         let html = this.md.render(content);
-        const reg = /\^\[((.|\n)*?)\]\((.*?\))\)/g;
+        const reg = /\^\[((.|\n)*?)\]\((#\[0-9a-fA-F\]\))\)/g;
         html = html.replace(reg, '<span style="color: $3">$1</span>');
         this.editor.clipboard.dangerouslyPasteHTML(html);
     }
@@ -204,8 +204,8 @@ class Forsythia {
                         const style = node.getAttribute('style');
                         const reg = /color:\s(.*)?;/;
                         const colorArr = reg.exec(style);
-
-                        return `^[${node.innerHTML}](${colorArr[1]})`;
+                        const color = utils.colorRGB2Hex(colorArr[1]);
+                        return `^[${node.innerHTML}](${color})`;
                     },
                 },
                 {
