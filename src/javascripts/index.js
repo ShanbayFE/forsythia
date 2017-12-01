@@ -50,8 +50,8 @@ class Forsythia {
 
     renderEditor(content) {
         let html = this.md.render(content);
-        const reg = /\^\[((.|\n)*?)\]\((#\[0-9a-fA-F\]\))\)/g;
-        html = html.replace(reg, '<span style="color: $3">$1</span>');
+        const reg = /\^\[(.*?)\]\((.*?)\)/g;
+        html = html.replace(reg, '<span style="color: $2">$1</span>');
         this.editor.clipboard.dangerouslyPasteHTML(html);
     }
 
