@@ -1,4 +1,3 @@
-
 class Toolbar {
     constructor($forsythia, options) {
         this.$forsythia = $forsythia;
@@ -13,33 +12,39 @@ class Toolbar {
 
         this.buildMenu();
         this.bindEvents();
-
     }
 
     buildMenu() {
-        const templates = [{
-            name: 'emphasis',
-            html: ['<p class="">B</p>'],
-        }, {
-            name: 'image',
-            html: [
-                '<div class="forsythia-toolbar-btn forsythia-head-btn" data-value="1">',
-                '<a href="javascript:;">',
-                'H1',
-                '</a>',
-                '</div>',
-                '<div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">',
-                `<input type="file" ${this.options.isMultiple ? 'multiple' : ''}/>`,
-                '<i></i>',
-                '<span>上传图片</span>',
-                '</div>',
-            ],
-        },];
+        const templates = [
+            {
+                name: 'emphasis',
+                html: ['<p class="">B</p>'],
+            },
+            {
+                name: 'image',
+                html: [
+                    '<div class="forsythia-toolbar-btn forsythia-head-btn" data-value="1">',
+                    '<a href="javascript:;">',
+                    'H1',
+                    '</a>',
+                    '</div>',
+                    '<div class="forsythia-img-btn forsythia-toolbar-btn" data-type="image">',
+                    `<input type="file" ${
+                        this.options.isMultiple ? 'multiple' : ''
+                    }/>`,
+                    '<i></i>',
+                    '<span>上传图片</span>',
+                    '</div>',
+                ],
+            },
+        ];
         const filteredTemplates = [];
 
         templates
-            .filter(item => this.options.disabledOptions.indexOf(item.name) === -1)
-            .forEach(item => filteredTemplates.push(...(item.html)));
+            .filter(
+                item => this.options.disabledOptions.indexOf(item.name) === -1,
+            )
+            .forEach(item => filteredTemplates.push(...item.html));
 
         // when all menu options are disabled, remove the toolbar element
         if (!filteredTemplates.length) {
@@ -51,7 +56,9 @@ class Toolbar {
     bindEvents() {
         const $input = this.el.querySelector('input');
         $input.addEventListener('change', (e) => {
-            const files = this.options.isMultiple ? e.target.files : e.target.files[0];
+            const files = this.options.isMultiple
+                ? e.target.files
+                : e.target.files[0];
             this.options.onAddImg(files);
         });
     }
